@@ -1,203 +1,214 @@
-#summary One-sentence summary of this page.
+#summary Tutorial
 
-<h1>Tutorial¶</h1>
+=Tutorial=
 
-<h2>How to use the cTDMS package</h2>
-<div class="section" id="reading-tdms-or-tdm-files">
-<h3>1. Reading TDMS or TDM files<a class="headerlink" href="#reading-tdms-or-tdm-files" title="Permalink to this headline">¶</a></h3>
+==1. Reading TDMS or TDM files==
 
-<p>To read a TDMS or TDM file you simply have to call:</p>
-<div class="highlight-python"><div class="highlight"><pre>from cTDMS.cTDMSimport TDM_File
 
-tdm=TDM_File("Data4.tdm")
-tdm.open()
-</pre></div>
-</div>
-<p>or:</p>
-<div class="highlight-python"><div class="highlight">
-<pre> from __future__ import  with_statement 
-from cTDMS.cTDMS import TDM_File 
+To read a TDMS or TDM file you simply have to call:
+{{{
+	from cTDMS.cTDMS import TDM_File
+	
+	tdm=TDM_File("Data4.tdm")
+	tdm.open()
+}}}
+or:
+{{{
+	from __future__ import with_statement
+	from cTDMS.cTDMS import TDM_File
+	
+	with TDM_File("Data4.tdm") as tdm:
+	   ...
+	   ...
+}}}
 
- with TDM_File ("Data4.tdm") as tdm : 
-        ... 
-        ... 
-</pre></div>
-</div>
+The format of the file name must be like this:
 
-<p>The format of the file name must be like this:</p>
-<div class="highlight-python"><div class="highlight"><pre> 
+{{{	
 "C:\\Daten\\Projekte\\PyVDAW\\tdms.tdms"
-</pre></div>
+}}}
 
-</div>
-<p>It is necessary to use double backslashes.</p>
-<p>The distiction between TDM or TDMS is just done by the extionsion of the file name. All operations of the cTDMS package can be done on TDM and TDMS files.</p>
+It is necessary to use double backslashes.
 
-<p>With <tt class="docutils literal"> tdm.open()</tt> the structure of the whole TDM file is read into memory and can be accessed by the object <tt class="docutils literal"> tdm </tt>.</p>
+The distiction between TDM or TDMS is just done by the extionsion of the file name. All operations of the cTDMS package can be done on TDM and TDMS files.
 
-<p>The file object could have some options like:</p>
+With {{{tdm.open()}}} the structure of the whole TDM file is read into memory and can be accessed by the {{{TDM_File}}} object {{{tdm}}}.
 
-<div class="highlight-python"><div class="highlight"><pre>TDM_File(filename, readonly = 0, fileType ="TDM", name = "" , description = ""  title = "" , author = "" ) 
-</pre></div>
-</div>
+The file object could have some options like:
+{{{
+  TDM_File(filename, readonly=0,  fileType="",  name="",  description="", title="", author="")
+}}}
 
-<p>With <tt class="docutils literal">readonly=1 the file could be opened for read accessonly.
-The other options like <tt class="docutils literal"><span class="pre">fileType</span></tt>,  <tt class="docutils literal"><span class="pre">name</span></tt>, etc. will be used as properties on file level.
+With {{{readonly=1}}} the file could be opened for read accessonly.
+The other options like {{{fileType}}}, {{{name}}}, etc. will be used as properties on file level.
 
-<p>If the file doesn`t exists it is created. If it alread exists, it is opened for read and if specified with <tt class="docutils literal"><span class="pre">readonly=0</span></tt> for write access.</p>
+If the file doesn\´t exists it is created. If it alread exists, it is opened for read and if specified with {{{readonly=0}}} for write access.
 
-<div class="section" id="closing-a-file">
+==============
+==Closing a file==
+==============
 
-<h3>Closing a file<a class="headerlink" href="#closing-a-file" title="Permalink to this headline">¶</a></h3>
-<p>With:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">tdm</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</pre></div>
-</div>
-<p>the file could be closed.</p>
-<p>If any changes made on the TDM file should be saved, a:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">tdm</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
-</pre></div>
-</div>
-<p>command has to be done. In this case all changes will be writen back to the original TDM or TDMS file.</p>
-<p>If the file was opened with:</p>
-<div class="highlight-python"><pre>with TDM_File("Data4.tdm", readonly=0) as tdm:</pre>
-</div>
-<p>any changes done on the data with be saved to the original TDM file, when leaving the <tt class="docutils literal"><span class="pre">with</span> <span class="pre">clause</span></tt></p>
-<p>If the file should be opened for readonly, the <tt class="docutils literal"><span class="pre">readonly=1</span></tt> option should be used.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">tdm</span><span class="o">=</span><span class="n">TDM_File</span><span class="p">(</span><span class="s">"Data4.tdm"</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>or:</p>
-<div class="highlight-python"><pre>with TDM_File("Data4.tdm", readonly=1) as tdm:</pre>
-</div>
-</div>
-<div class="section" id="accessing-properties-on-file-level">
-<h3>Accessing properties on file level<a class="headerlink" href="#accessing-properties-on-file-level" title="Permalink to this headline">¶</a></h3>
-<p>Properities of the TDM file can be accessed by reading the dictionary <tt class="docutils literal"><span class="pre">tdm.attrs</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">with</span> <span class="n">TDM_File</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span> <span class="k">as</span> <span class="n">tdm</span><span class="p">:</span>
-<span class="c">#  File properties</span>
-    <span class="k">print</span> <span class="s">"File Properties -----"</span>
-    <span class="k">for</span> <span class="nb">property</span> <span class="ow">in</span> <span class="n">tdm</span><span class="o">.</span><span class="n">attrs</span><span class="p">:</span>
-        <span class="k">print</span> <span class="nb">property</span><span class="p">,</span>  <span class="n">tdm</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="nb">property</span><span class="p">]</span>
-</pre></div>
-</div>
-<p>Properties can be writen like this:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">datetime</span>
-<span class="n">dt</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
-<span class="n">tdm</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s">"title"</span><span class="p">]</span><span class="o">=</span><span class="s">"abc"</span>
-<span class="n">tdm</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s">"name"</span><span class="p">]</span><span class="o">=</span><span class="s">"TDM Test File"</span>
-<span class="n">tdm</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s">"xxx"</span><span class="p">]</span><span class="o">=</span><span class="mi">123</span>
-<span class="n">tdm</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s">"date"</span><span class="p">]</span><span class="o">=</span><span class="n">dt</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="accessing-groups-in-a-tdms-or-tdm-file">
-<h3>Accessing groups in a TDMS or TDM file<a class="headerlink" href="#accessing-groups-in-a-tdms-or-tdm-file" title="Permalink to this headline">¶</a></h3>
-<p>The tdm file object is organized like a dictionary. The groups contained in the TDM file can be acces by:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">groupname</span> <span class="ow">in</span> <span class="n">tdm</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s">"Group </span><span class="si">%s</span><span class="s"> ------------"</span><span class="o">%</span><span class="p">(</span> <span class="n">groupname</span><span class="p">)</span>
-    <span class="n">group</span><span class="o">=</span><span class="n">tdm</span><span class="p">[</span><span class="n">groupname</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="creating-a-new-group">
-<h3>Creating a new group<a class="headerlink" href="#creating-a-new-group" title="Permalink to this headline">¶</a></h3>
-<p>A new group in the TDM file can be created with following command:</p>
-<div class="highlight-python"><pre>if "newgroupname" is not in tdm:
-    new_group=tdm.add_Group("newgroupname",  "Description of the group")</pre>
-</div>
-<p>Before creating a new group, it has to be checked, that this group is not already existing.</p>
-</div>
-<div class="section" id="deleting-a-group">
-<h3>Deleting a group<a class="headerlink" href="#deleting-a-group" title="Permalink to this headline">¶</a></h3>
-<p>A group can be deleted by deleting the dictionary item in <tt class="docutils literal"><span class="pre">tdm</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">del</span> <span class="n">tdm</span><span class="p">[</span><span class="n">groupname</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="access-properties-of-a-group">
-<h3>Access properties of a group<a class="headerlink" href="#access-properties-of-a-group" title="Permalink to this headline">¶</a></h3>
-<p>Properties on group level can be accessed similar to properties on file level:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">groupname</span> <span class="ow">in</span> <span class="n">tdm</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s">"Group </span><span class="si">%s</span><span class="s"> ------------"</span><span class="o">%</span><span class="p">(</span> <span class="n">groupname</span><span class="p">)</span>
-    <span class="n">group</span><span class="o">=</span><span class="n">tdm</span><span class="p">[</span><span class="n">groupname</span><span class="p">]</span>
+With:
+{{{ 
+    tdm.close()
+}}}
+the file could be closed.
 
-    <span class="k">print</span> <span class="s">"Group Properties -----"</span>
-    <span class="k">for</span> <span class="nb">property</span> <span class="ow">in</span> <span class="n">group</span><span class="o">.</span><span class="n">attrs</span><span class="p">:</span>
-        <span class="k">print</span> <span class="nb">property</span><span class="p">,</span> <span class="s">" = "</span><span class="p">,</span>  <span class="n">group</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="nb">property</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="getting-data-from-a-group">
-<h3>Getting data from a group<a class="headerlink" href="#getting-data-from-a-group" title="Permalink to this headline">¶</a></h3>
-<p>Measuring data are store in channels of a group. the can be easily accessed by geting the channels from the group:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">groupname</span> <span class="ow">in</span> <span class="n">tdm</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s">"Group </span><span class="si">%s</span><span class="s"> ------------"</span><span class="o">%</span><span class="p">(</span> <span class="n">groupname</span><span class="p">)</span>
-    <span class="n">group</span><span class="o">=</span><span class="n">tdm</span><span class="p">[</span><span class="n">groupname</span><span class="p">]</span>
+If any changes made on the TDM file should be saved, a:
+{{{
+    tdm.save()
+}}}   
+command has to be done. In this case all changes will be writen back to the original TDM or TDMS file.
 
-    <span class="k">for</span> <span class="n">channelname</span> <span class="ow">in</span> <span class="n">group</span><span class="p">:</span>
-        <span class="k">print</span> <span class="s">"Channel </span><span class="si">%s</span><span class="s"> ------------"</span><span class="o">%</span><span class="p">(</span><span class="n">channelname</span><span class="p">)</span>
-        <span class="n">channel</span><span class="o">=</span><span class="n">group</span><span class="p">[</span><span class="n">channelname</span><span class="p">]</span>
-        <span class="k">print</span> <span class="s">"Channel Properties -----"</span>
-        <span class="k">for</span> <span class="nb">property</span> <span class="ow">in</span> <span class="n">channel</span><span class="o">.</span><span class="n">attrs</span><span class="p">:</span>
-            <span class="k">print</span> <span class="nb">property</span><span class="p">,</span>  <span class="n">channel</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="nb">property</span><span class="p">]</span>
-        <span class="c"># get the data</span>
-        <span class="n">d</span><span class="o">=</span><span class="n">channel</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
-        <span class="n">d</span><span class="o">=</span><span class="n">channel</span><span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">]</span>
-        <span class="n">d</span><span class="o">=</span><span class="n">channel</span><span class="p">[:]</span>
-        <span class="n">d</span><span class="o">=</span><span class="n">channel</span><span class="p">[</span><span class="mi">0</span><span class="p">:]</span>
-        <span class="n">d</span><span class="o">=</span><span class="n">channel</span><span class="p">[</span><span class="mi">10</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+If the file was opened with:
+{{{
+    with TDM_File("Data4.tdm", readonly=0) as tdm:
+}}}   
+any changes done on the data with be saved to the original TDM file, when leaving the {{{with clause}}}
 
-        <span class="n">t</span><span class="o">=</span><span class="nb">type</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-        <span class="k">print</span> <span class="s">"data type: </span><span class="si">%s</span><span class="s">, length: </span><span class="si">%d</span><span class="s">"</span><span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">d</span><span class="p">)),</span>  <span class="nb">len</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
-</pre></div>
-</div>
-<p>The data in <tt class="docutils literal"><span class="pre">group[channelname]</span></tt> are normal numpy objects and could be of different type.</p>
-<p>Following mapping of data type will be done</p>
-<blockquote>
-<div><table border="1" class="docutils">
-<colgroup>
-<col width="61%" />
-<col width="39%" />
-</colgroup>
-<thead valign="bottom">
-<tr><th class="head">TDMS</th>
-<th class="head">numpy</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr><td>DDC_UInt8</td>
-<td>u1</td>
-</tr>
-<tr><td>DDC_Int16</td>
-<td>i2</td>
-</tr>
-<tr><td>DDC_Int32</td>
-<td>i4</td>
-</tr>
-<tr><td>DDC_Float</td>
-<td>float32</td>
-</tr>
-<tr><td>DDC_Double</td>
-<td>float64</td>
-</tr>
-</tbody>
-</table>
-</div></blockquote>
-<p>Data from a channel could be accessed by using the normal Python-way of indexing.</p>
-</div>
-<div class="section" id="accessing-the-properties-of-a-data-channel">
-<h3>Accessing the properties of a data channel<a class="headerlink" href="#accessing-the-properties-of-a-data-channel" title="Permalink to this headline">¶</a></h3>
-<p>The properties of each channel can be accessed in the same way as on group or file level by reading and writing of the <tt class="docutils literal"><span class="pre">channel.attrs</span></tt> dictionary.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">channel</span><span class="o">=</span><span class="n">group</span><span class="p">[</span><span class="n">channelname</span><span class="p">]</span>
-<span class="k">print</span> <span class="s">"Channel Properties -----"</span>
-<span class="k">for</span> <span class="nb">property</span> <span class="ow">in</span> <span class="n">channel</span><span class="o">.</span><span class="n">attrs</span><span class="p">:</span>
-    <span class="k">print</span> <span class="nb">property</span><span class="p">,</span>  <span class="n">channel</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="nb">property</span><span class="p">]</span>
-    <span class="n">channel</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s">"new property"</span><span class="p">]</span><span class="o">=</span><span class="s">"test foobar"</span>
-</pre></div>
-</div>
-<p>New properties could be created by:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">channel</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s">"new property"</span><span class="p">]</span><span class="o">=</span><span class="s">"test foobar"</span>
-</pre></div>
-</div>
-<p>Properties could not be deleted, this function is not implemented in the underlying library.</p>
+If the file should be opened for readonly, the ``readonly=1`` option should be used.
+{{{
+    tdm=TDM_File("Data4.tdm", readonly=1)
+}}}
+or:
+{{{
+    with TDM_File("Data4.tdm", readonly=1) as tdm:
+}}}
+	
+==================================
+==Accessing properties on file level==
+==================================
+
+Properities of the TDM file can be accessed by reading the dictionary ``tdm.attrs``:
+{{{
+    with TDM_File(fn) as tdm:
+    #  File properties
+        print "File Properties -----"
+        for property in tdm.attrs:
+            print property,  tdm.attrs[property]
+}}}
+Properties can be writen like this:
+{{{
+    import datetime
+    dt=datetime.datetime.now()
+    tdm.attrs["title"]="abc"
+    tdm.attrs["name"]="TDM Test File"
+    tdm.attrs["xxx"]=123
+    tdm.attrs["date"]=dt
+}}}
+
+======================================
+==Accessing groups in a TDMS or TDM file==
+======================================
+
+The tdm file object is organized like a dictionary. The groups contained in the TDM file can be acces by:
+{{{
+    for groupname in tdm:
+        print "Group %s ------------"%( groupname)
+        group=tdm[groupname]
+}}}
+ 
+==================== 
+==Creating a new group==
+====================
+
+A new group in the TDM file can be created with following command:
+{{{
+    if "newgroupname" is not in tdm:
+        new_group=tdm.add_Group("newgroupname",  "Description of the group")
+}}}
+  
+Before creating a new group, it has to be checked, that this group is not already existing.  
+
+================
+==Deleting a group==
+================
+
+A group can be deleted by deleting the dictionary item in ``tdm``:
+{{{
+    del tdm[groupname]
+}}}
+   
+============================
+==Access properties of a group==
+============================
+
+Properties on group level can be accessed similar to properties on file level:
+{{{
+    for groupname in tdm:
+        print "Group %s ------------"%( groupname)
+        group=tdm[groupname] 
+        
+        print "Group Properties -----"
+        for property in group.attrs:
+            print property, " = ",  group.attrs[property]   
+  
+}}}       
+=========================
+==Getting data from a group==
+=========================
+
+Measuring data are store in channels of a group. The datacan be easily accessed by getting the channels from the group:
+{{{
+    for groupname in tdm:
+        print "Group %s ------------"%( groupname)
+        group=tdm[groupname] 
+        
+        for channelname in group:
+            print "Channel %s ------------"%(channelname)
+            channel=group[channelname]
+            print "Channel Properties -----"
+            for property in channel.attrs:
+                print property,  channel.attrs[property]    
+            # get the data  
+            d=channel[5]   
+            d=channel[-5]
+            d=channel[:]
+            d=channel[0:]
+            d=channel[10:-1]
+            
+            t=type(d)
+            print "data type: %s, length: %d"%(str(type(d)),  len(d))
+}}}
+
+The data in ``group[channelname]`` are normal numpy objects and could be of different type.
+
+Following mapping of data type will be done
+ {{{  
+    +--------------+---------+
+    |TDMS          |  numpy  |
+    +==============+=========+
+    |DDC_UInt8     |  u1     |
+    +--------------+---------+
+    |DDC_Int16     |  i2     |
+    +--------------+---------+
+    |DDC_Int32     |  i4     |
+    +--------------+---------+
+    |DDC_Float     |  float32|
+    +--------------+---------+
+    |DDC_Double    | float64 |
+    +--------------+---------+
+ }}}
+
+Data from a channel could be accessed by using the normal Python-way of indexing.
+
+ 
+==========================================
+==Accessing the properties of a data channel==
+==========================================
+
+The properties of each channel can be accessed in the same way as on group or file level by reading and writing of the {{{channel.attrs}}} dictionary.
+{{{
+    channel=group[channelname]
+    print "Channel Properties -----"
+    for property in channel.attrs:
+        print property,  channel.attrs[property]
+        channel.attrs["new property"]="test foobar"
+}}}   
+New properties could be created by:
+{{{
+    channel.attrs["new property"]="test foobar"
+}}}   
+Properties could not be deleted, this function is not implemented in the underlying library.
+
+        
