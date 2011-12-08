@@ -45,21 +45,12 @@ __init__.py
 cTDMS.py
 dacasr.dll
 hdf5dll.dll
-    nilibddc.dll
-    nilibddc.lib
+nilibddc.dll
+nilibddc.lib
 stlport.5.0.dll
 tdms_ebd.dll
 uds.dll
 usiEx.dll
 usiPluginTDM.dll
-    uspTdms.dll
-    xerces-c_2_8_usi.dll</pre>
-</div>
-</div>
-</div>
-</div>
-
-
-          </div>
-        </div>
-      </div>
+uspTdms.dll
+xerces-c_2_8_usi.dll</pre>
