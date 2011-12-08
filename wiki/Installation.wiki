@@ -1,22 +1,29 @@
+=Installation=
 
-<h2>Installation</h2>
-<div class="section" id="setup">
-<h3>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h3>
-<p>The package can be installed  by using the command</p>
-<div class="highlight-python"><pre>python setup.py install</pre>
-</div>
-<p>This will create a cTDMS directory in /site-packages and copy the python scripts and the documentation to this directory.
-After installation the NILIBDDC library from National Instrumentshas to be installed.</p>
-</div>
-<div class="section" id="installation-of-the-nilibddc-library-from-national-instruments">
-<h3>Installation of the NILIBDDC library from National Instruments<a class="headerlink" href="#installation-of-the-nilibddc-library-from-national-instruments" title="Permalink to this headline">¶</a></h3>
+==Setup==
+
+The package can be installed  by using the command
+
+{{{python setup.py install}}}
+
+
+This will create a cTDMS directory in /site-packages and copy the python scripts and the documentation to this directory.
+After installation the NILIBDDC library from National Instruments has to be installed.
+
+
+
+==Installation of the NILIBDDC library from National Instruments==
+
 <p>To use the cTDMS package the NILIBDDC library from National Instrumentshas to be installed.</p>
+
 <p>This library can be downloaded from:</p>
 <blockquote>
 <div><a class="reference external" href="http://research.ni.com/run/2007codelicenseagree">http://research.ni.com/run/2007codelicenseagree</a></div></blockquote>
-<p>From there the file dominonilibddc.zip can be downloaded.</p>
-<p>From this zip file following file should be copied to the cTDMS package directory:</p>
-<div class="highlight-python"><pre>\dev\bin\32-bit\nilibddc.dll
+
+From there the file dominonilibddc.zip can be downloaded.
+From this zip file following file should be copied to the cTDMS package directory:
+{{{
+\dev\bin\32-bit\nilibddc.dll
 \dev\bin\32-bit\nilibddc.lib
 \dev\bin\32-bit\uspTdms.dll
 \dev\bin\32-bit\usiEx.dll
@@ -27,13 +34,17 @@ After installation the NILIBDDC library from National Instrumentshas to be insta
 \dev\bin\32-bit\stlport.5.0.dll
 \dev\bin\32-bit\xerces-c_2_8_usi.dll
 \dev\bin\32-bit\hdf5dll.dll</pre>
-</div>
+}}}
+
 <p>and the <strong>whole</strong> directory</p>
-<div class="highlight-python"><pre>\dev\bin\32-bit\nilibddc.lib\DataModels</pre>
-</div>
-<p>Copy the cTDMS package directory to your sitepackage path, e.g. <tt class="docutils literal"><span class="pre">c:\Python26\Lib\sitepackage\cTDMS</span></tt>.</p>
+{{{\dev\bin\32-bit\nilibddc.lib\DataModels}}}
+
+
+<p>Copy the cTDMS package directory to your sitepackage path, e.g. {{{c:\Python26\Lib\sitepackage\cTDMS}}}.
+
 <p>At the end of the installation the cTDMS directory should contain following files:</p>
-<div class="highlight-python"><pre>DATAModels
+{{{
+DATAModels
 html
 __init__.py
 cTDMS.py
@@ -47,4 +58,5 @@ uds.dll
 usiEx.dll
 usiPluginTDM.dll
 uspTdms.dll
-xerces-c_2_8_usi.dll</pre>
+xerces-c_2_8_usi.dll
+}}}
